@@ -7,11 +7,9 @@ const responseClient = require('../utils/utils').responseClient
 
 router.post('/', function (req, res, next) {
   let { id } = req.body
-  let responseData = []
   List.findOne({_id: id}, '_id title author time content type created updated')
     .then((result) => {
-      responseData = result
-      responseClient(res, 200, 0, '', responseData)
+      responseClient(res, 200, 0, '', result)
     }).catch(err => {
       responseClient(res)
     })
