@@ -9,5 +9,6 @@ module.exports = function (app) {
   app.use('/saveImg', require('./saveImg')),
   app.use('/getComment', require('./getComment')),
   app.use('/commentArticle', require('./commentArticle')),
-  app.use('/deleteComment', require('./deleteComment'))
+  app.use('/deleteComment', require('./deleteComment')),
+  app.use('/getBlogTypes', require('./getBlogTypes'))
 }
