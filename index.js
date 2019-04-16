@@ -5,6 +5,7 @@ const MongoStore = require('connect-mongo')(session)
 const flash = require('connect-flash')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
+const config = require('./utils/config')
 
 // const config = require('config-lite')(__dirname)
 
@@ -46,7 +47,7 @@ app.use(flash())
 routes(app)
 
 
-mongoose.connect('mongodb://localhost:27017/myblog')
+mongoose.connect(`mongodb://${config.dbHost}:${config.dbPort}/${config.dbName}`)
 mongoose.connection.on('connected', function () {
   console.log('Mongoose connection open')
 });
