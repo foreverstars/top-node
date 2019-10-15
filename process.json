@@ -1,0 +1,13 @@
+// 进程文件
+{
+  "apps": [
+    {
+      "name": "deerschen", // 自己定义好的进程标识
+      "script": "./index.js", // pm2启动的程序目录 ,写项目启动文件的位置
+      "log_date_format": "YYYY-MM-DD HH:mm Z", // 日志输出时间格式
+      "log_file": "./logs/log_file.log", // nodejs输出的后台日志
+      "error_file": "./logs/error_file.log", // 当后台有错误时输出的日志
+      "out_file": "./logs/out_file.log"  // log_file和error_file合并输出的日志
+    }
+  ]
+}
