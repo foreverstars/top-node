@@ -4,7 +4,8 @@ module.exports = new mongoose.Schema({
   articleId: String, // 文章Id
   userId: String, // 用户id
   username: String, // 用户名
-  comment: String // 评论内容
+  comment: String, // 评论内容
+  nickname: String, // 用户昵称
 }, {
   timestamps: {
     createdAt: 'created', // 创建时间

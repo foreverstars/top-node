@@ -6,18 +6,9 @@ const User = require('../models/userList')
 const { MD5_SUFFIX, responseClient, md5 } = require('../utils/utils')
 
 router.post('/', function(req, res, next) {
-	let { username, password } = req.body
-	if (!username) {
-		responseClient(res, 400, 2, '用户名不可为空')
-		return
-	}
-	if (!password) {
-		responseClient(res, 400, 2, '密码不可为空')
-		return
-	}
+	let { id } = req.body
 	User.findOne({
-		username,
-		password: md5(password + MD5_SUFFIX)
+		_id: id
 	})
 		.then(userInfo => {
 			if (userInfo) {
@@ -30,10 +21,10 @@ router.post('/', function(req, res, next) {
 				//登录成功后设置session
 				// req.session.userInfo = data
 
-				responseClient(res, 200, 0, '登录成功', data)
+				responseClient(res, 200, 0, '', data)
 				return
 			}
-			responseClient(res, 200, 1, '用户名密码错误')
+			responseClient(res, 200, 1, '')
 		})
 		.catch(err => {
 			responseClient(res)

@@ -4,6 +4,11 @@ const router = express.Router()
 const User = require('../models/userList')
 const { MD5_SUFFIX, responseClient, md5 } = require('../utils/utils')
 
+
+function getRandom () {
+	return  '编号' + Math.round(90000*Math.random()+10000)
+}
+
 // POST 用户注册
 router.post('/', function(req, res, next) {
 	// res.send('注册')
@@ -28,13 +33,17 @@ router.post('/', function(req, res, next) {
 			let user = new User({
 				username: username,
 				password: md5(password + MD5_SUFFIX),
-				isAdmin: 0
+				isAdmin: 0,
+				nickname: getRandom(),
+				email: ''
 			})
 			user.save().then(function() {
 				User.findOne({ username: username }).then(userInfo => {
 					let data = {}
 					data.username = userInfo.username
 					data.userId = userInfo._id
+					data.nickname = userInfo.nickname
+					data.email = userInfo.email
 					responseClient(res, 200, 0, '注册成功', data)
 					return
 				})
