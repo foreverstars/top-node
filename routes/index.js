@@ -3,6 +3,7 @@ module.exports = function (app) {
   app.use('/login', require('./login')),
   app.use('/getUserinfo', require('./getUserinfo')),
   app.use('/updatePersonal', require('./updatePersonal')),
+  app.use('/uploadPhoto', require('./uploadPhoto')),  
   app.use('/addArticle', require('./addArticle')),
   app.use('/deleteArticle', require('./deleteArticle')),
   app.use('/getContent', require('./getContent')),
