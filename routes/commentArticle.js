@@ -7,7 +7,11 @@ const CommentList = require('../models/comment')
 const { responseClient } = require('../utils/utils')
 
 router.post('/', function (req, res, next) {
+<<<<<<< HEAD
 	let { articleId, userId, username, comment } = req.body
+=======
+	let { articleId, userId, username, comment, nickname } = req.body
+>>>>>>> ee040a328787c039626250112265db769fc92d96
   if (!articleId) {
     responseClient(res, 400, 2, '用户名不可为空')
   }
@@ -21,7 +25,11 @@ router.post('/', function (req, res, next) {
     responseClient(res, 400, 2, '文章内容不可为空')
   }
   const article = new CommentList({
+<<<<<<< HEAD
     articleId, userId, username, comment
+=======
+    articleId, userId, username, comment, nickname
+>>>>>>> ee040a328787c039626250112265db769fc92d96
   })
   article.save().then(data => {
     responseClient(res, 200, 0, '评论成功', data)
