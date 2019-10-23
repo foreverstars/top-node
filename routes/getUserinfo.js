@@ -18,6 +18,7 @@ router.post('/', function(req, res, next) {
 				data.userId = userInfo._id
 				data.nickname = userInfo.nickname
 				data.email = userInfo.email
+				data.photo = userInfo.photo
 				//登录成功后设置session
 				// req.session.userInfo = data
 

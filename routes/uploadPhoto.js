@@ -8,25 +8,45 @@ const User = require('../models/userList')
 const { MD5_SUFFIX, responseClient, md5 } = require('../utils/utils')
 
 const multer  = require('multer');
-var upload = multer({ dest: '/deerschen/imgStore'})
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'C:\\Users\\niaoyun\\Desktop\\imgStore')
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + "-" + file.originalname)
+  }
+})
+ 
+var upload = multer({ storage: storage })
 
 router.post('/', upload.single('photo'), function(req, res, next) {
   var file = req.file;
-  User.update({
+  console.log(file)
+  var { id } = req.body;
+  console.log(id)
+  User.updateOne({
     _id: id,
-  }, { photo: file})
+  }, { photo: file.path})
     .then(userInfo => {
       if (userInfo) {
         //登录成功
-        let data = {}
-        data.photo = userInfo.photo
-        //登录成功后设置session
-        // req.session.userInfo = data
-
-        responseClient(res, 200, 0, '', data)
-        return
+        User.findOne({
+          _id: id
+        })
+          .then(userInfo => {
+            if (userInfo) {
+              //登录成功
+              console.log(userInfo)
+              let data = {}
+              data.photo = userInfo.photo
+              responseClient(res, 200, 0, '', data)
+            } else {
+              responseClient(res, 200, 1, '')
+            }
+          })
+      } else {
+        responseClient(res, 200, 1, '')
       }
-      responseClient(res, 200, 1, '')
     })
     .catch(err => {
       responseClient(res)
