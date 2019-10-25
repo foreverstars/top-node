@@ -6,11 +6,13 @@ var multiparty = require('multiparty');
 
 const User = require('../models/userList')
 const { MD5_SUFFIX, responseClient, md5 } = require('../utils/utils')
+const { sourceSite } = require('../utils/config')
 
 const multer  = require('multer');
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'C:\\Users\\niaoyun\\Desktop\\imgStore')
+    cb(null, '/deerschen/html/imgStore')
+    // cb(null, 'C:\\Users\\niaoyun\\Desktop\\imgStore')
   },
   filename: function (req, file, cb) {
     cb(null, Date.now() + "-" + file.originalname)
@@ -21,12 +23,11 @@ var upload = multer({ storage: storage })
 
 router.post('/', upload.single('photo'), function(req, res, next) {
   var file = req.file;
-  console.log(file)
   var { id } = req.body;
-  console.log(id)
+  var path = sourceSite + file.filename
   User.updateOne({
     _id: id,
-  }, { photo: file.path})
+  }, { photo: path})
     .then(userInfo => {
       if (userInfo) {
         //登录成功
@@ -36,7 +37,6 @@ router.post('/', upload.single('photo'), function(req, res, next) {
           .then(userInfo => {
             if (userInfo) {
               //登录成功
-              console.log(userInfo)
               let data = {}
               data.photo = userInfo.photo
               responseClient(res, 200, 0, '', data)
