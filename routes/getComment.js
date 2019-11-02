@@ -9,7 +9,7 @@ const responseClient = require('../utils/utils').responseClient
 router.post('/', function (req, res, next) {
   let { articleId } = req.body
   List.find({articleId}, '_id articleId userId username comment created nickname', {limit: 10}).then(result => {
-    responseData = result
+    responseData = result\
     for (var i =0; i<responseData.length;i++) {
       User.findOne({
         _id: responseData[i]._id
@@ -20,6 +20,7 @@ router.post('/', function (req, res, next) {
         }
       })
     }
+    responseClient(res, 200, 0, '', responseData)
   }).catch(err => {
     responseClient(res)
   })
