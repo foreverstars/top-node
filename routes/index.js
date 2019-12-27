@@ -1,6 +1,9 @@
+const checkLogin = require('./checkLogin');
+
 module.exports = function (app) {
   app.use('/register', require('./register')),
   app.use('/login', require('./login')),
+  app.use(checkLogin),
   app.use('/getUserinfo', require('./getUserinfo')),
   app.use('/updatePersonal', require('./updatePersonal')),
   app.use('/uploadPhoto', require('./uploadPhoto')),  

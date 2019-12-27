@@ -28,12 +28,15 @@ router.post('/', function(req, res, next) {
 				data.nickname = userInfo.nickname
 				data.email = userInfo.email
 				//登录成功后设置session
-				// req.session.userInfo = data
+				req.session.regenerate(function(){
+					req.session.userId = data.userId;
+					req.session.save();  //保存一下修改后的Session
 
-				responseClient(res, 200, 0, '登录成功', data)
-				return
+					responseClient(res, 200, 0, '登录成功', data)
+				});
+			} else{
+				responseClient(res, 200, 1, '用户名密码错误')
 			}
-			responseClient(res, 200, 1, '用户名密码错误')
 		})
 		.catch(err => {
 			responseClient(res)

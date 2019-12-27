@@ -10,15 +10,15 @@ router.post('/', function (req, res, next) {
 	let { articleId, userId, username, comment, nickname } = req.body
   if (!articleId) {
     responseClient(res, 400, 2, '用户名不可为空')
+    return
   }
   if (!userId) {
     responseClient(res, 400, 2, '用户Id不可为空')
-  }
-  if (!username) {
-    responseClient(res, 400, 2, '文章标题不可为空')
+    return
   }
   if (!comment) {
     responseClient(res, 400, 2, '文章内容不可为空')
+    return
   }
   const article = new CommentList({
     articleId, userId, username, comment, nickname
